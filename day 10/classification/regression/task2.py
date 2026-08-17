@@ -9,21 +9,21 @@ df = pd.read_csv("task2.csv")
 print("Dataset:")
 print(df)
 
-# Input
-X = df[["Appliances", "Usage_Hours"]]
+# Input features
+X = df[["Temperature", "Appliances", "Time_of_Day", "Previous_Usage"]]
 
-# Output
+# Target
 y = df["Electricity_Consumption"]
 
-# Split dataset
+# Split data
 X_train, X_test, y_train, y_test = train_test_split(
     X, y, test_size=0.2, random_state=42
 )
 
-# Create model
+# Create Linear Regression model
 model = LinearRegression()
 
-# Train model
+# Train the model
 model.fit(X_train, y_train)
 
 # Predict test data
@@ -36,11 +36,16 @@ r2 = r2_score(y_test, y_pred)
 print("\nMean Squared Error:", mse)
 print("R2 Score:", r2)
 
-# Predict electricity consumption for a new house
-new_house = [[10, 6]]
+# Predict for a new household
+new_data = [[29, 7, 19, 16.7]]
 
-prediction = model.predict(new_house)
+prediction = model.predict(new_data)
 
-print("\nNumber of Appliances:", new_house[0][0])
-print("Usage Hours:", new_house[0][1])
-print("Predicted Electricity Consumption:", prediction[0], "kWh")
+print("\nNew Household:")
+print("Temperature: 29")
+print("Appliances: 7")
+print("Time of Day: 19")
+print("Previous Usage: 16.7")
+
+print("\nPredicted Electricity Consumption:",
+      prediction[0], "kWh")
